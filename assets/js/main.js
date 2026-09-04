@@ -59,10 +59,19 @@
   if (spy.length && sections.length) {
     let marks = [];
     let last = null;
+    /* Leer offsetTop de todas las secciones obliga al navegador a maquetarlas,
+       incluidas las que content-visibility se estaba ahorrando. Por eso la
+       medida no se toma al cargar: se marca como pendiente y se toma sola la
+       primera vez que hace falta, es decir, al primer scroll. */
+    let pendiente = true;
+    const marcarPendiente = () => { pendiente = true; };
     const measure = () => {
       marks = sections.map((s) => ({ id: s.id, top: s.offsetTop - 160 }));
+      pendiente = false;
+      last = null;
     };
     const sync = (y) => {
+      if (pendiente) measure();
       if (!marks.length) return;
       let current = marks[0].id;
       for (let i = 0; i < marks.length; i++) if (y >= marks[i].top) current = marks[i].id;
@@ -70,18 +79,19 @@
       last = current;
       spy.forEach((a) => a.classList.toggle("active", a.getAttribute("href") === "#" + current));
     };
-    const remeasure = () => { measure(); last = null; sync(window.scrollY); };
-    requestAnimationFrame(remeasure);
     onScrollFns.push(sync);
-    window.addEventListener("load", () => requestAnimationFrame(remeasure));
-    let rt;
-    const remeasureDebounced = () => { clearTimeout(rt); rt = setTimeout(remeasure, 150); };
-    window.addEventListener("resize", remeasureDebounced, { passive: true });
-    /* Con content-visibility las secciones aún sin pintar ocupan la altura
-       estimada; al materializarse cambian de alto y los offsetTop cacheados
-       se quedan viejos. El ResizeObserver vuelve a medir cuando eso pasa. */
+    /* Si se llega con el scroll ya movido (enlace profundo, vuelta atrás) hay
+       que marcar el enlace sin esperar a que el visitante mueva la rueda. */
+    window.addEventListener("load", () => {
+      if (window.scrollY > 0) requestAnimationFrame(() => sync(window.scrollY));
+    });
+    /* Al cambiar el tamaño -o al materializarse una seccion con
+       content-visibility, que cambia el alto del body- las medidas cacheadas
+       se quedan viejas. Marcarlas pendientes no cuesta layout; se remiden
+       solas en el siguiente scroll. */
+    window.addEventListener("resize", marcarPendiente, { passive: true });
     if ("ResizeObserver" in window) {
-      new ResizeObserver(remeasureDebounced).observe(document.body);
+      new ResizeObserver(marcarPendiente).observe(document.body);
     }
   }
 
