@@ -40,18 +40,14 @@
 <link rel="apple-touch-icon" href="assets/logo-whitemoon.png">
 
 <!-- Fuentes auto-hospedadas (subset latin). Cero peticiones a Google Fonts. -->
-<link rel="preload" as="font" type="font/woff2" href="assets/fonts/sora-400-latin.woff2" crossorigin>
-<link rel="preload" as="font" type="font/woff2" href="assets/fonts/sora-600-latin.woff2" crossorigin>
-<link rel="preload" as="font" type="font/woff2" href="assets/fonts/sora-700-latin.woff2" crossorigin>
-<link rel="preload" as="font" type="font/woff2" href="assets/fonts/sora-800-latin.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/sora-var-latin.woff2" crossorigin>
 
 <!-- CSS crítico en línea: el resto de la hoja deja de bloquear el render -->
 <style>
-@font-face{font-family:'Sora';font-style:normal;font-weight:400;font-display:swap;src:url(assets/fonts/sora-400-latin.woff2) format('woff2')}
-@font-face{font-family:'Sora';font-style:normal;font-weight:500;font-display:swap;src:url(assets/fonts/sora-500-latin.woff2) format('woff2')}
-@font-face{font-family:'Sora';font-style:normal;font-weight:600;font-display:swap;src:url(assets/fonts/sora-600-latin.woff2) format('woff2')}
-@font-face{font-family:'Sora';font-style:normal;font-weight:700;font-display:swap;src:url(assets/fonts/sora-700-latin.woff2) format('woff2')}
-@font-face{font-family:'Sora';font-style:normal;font-weight:800;font-display:swap;src:url(assets/fonts/sora-800-latin.woff2) format('woff2')}
+/* Sora es una fuente variable: los cinco ficheros por peso que habia antes
+   eran diez copias byte a byte de estos dos. Un solo eje 400-800. */
+@font-face{font-family:'Sora';font-style:normal;font-weight:400 800;font-display:swap;src:url(assets/fonts/sora-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:'Sora';font-style:normal;font-weight:400 800;font-display:swap;src:url(assets/fonts/sora-var-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
 :root{--white:#fff;--bg:#fff;--bg2:#f7f8f5;--bg3:#f7f8f5;--surface:#fff;--text:#1f2430;--ink-2:#3a4050;--muted:#666e80;--g:#7cb342;--g-hover:#6ea338;--g-dark:#4e7a29;--g-deep:#3d5f20;--g-chip:#eef6e6;--p:#8b5cf6;--p-dark:#5b21b6;--p-deep:#4c1d95;--p-chip:#f3eeff;--line:#eceee8;--line-2:#dadfd2;--sh-sm:0 1px 2px rgba(31,36,48,.05),0 2px 8px rgba(31,36,48,.04);--sh-md:0 2px 6px rgba(31,36,48,.05),0 12px 28px -12px rgba(31,36,48,.13);--sh-lg:0 4px 12px rgba(31,36,48,.06),0 26px 60px -26px rgba(78,122,41,.3);--display:'Sora',system-ui,-apple-system,'Segoe UI',sans-serif;--body:'Sora',system-ui,-apple-system,'Segoe UI',sans-serif;--maxw:1240px;--nav-h:80px}
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 16px);-webkit-text-size-adjust:100%}
