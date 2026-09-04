@@ -921,7 +921,7 @@
     enviado = true;
 
     const cuando = lead.diaISO && lead.hora
-      ? " · Clase: " + lead.dia + " a las " + lead.hora
+      ? " · Día: " + lead.dia + " a las " + lead.hora
       : "";
 
     const insert = insertaLead({
