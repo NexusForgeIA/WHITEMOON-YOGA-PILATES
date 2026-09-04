@@ -139,7 +139,11 @@
         }
       });
     };
-    requestAnimationFrame(revealPasados);
+    /* Ese primer barrido solo hace falta si se ha entrado por un enlace
+       profundo o con el scroll restaurado: en una carga normal el observer ya
+       revela lo que esta en pantalla. Evitarlo quita un layout sincrono justo
+       antes del primer pintado. */
+    if (location.hash || window.scrollY > 0) requestAnimationFrame(revealPasados);
     window.addEventListener("load", () => requestAnimationFrame(revealPasados));
     window.addEventListener("hashchange", () => setTimeout(revealPasados, 420));
   } else {
