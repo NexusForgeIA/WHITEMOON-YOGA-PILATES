@@ -173,7 +173,9 @@ h3,h4{font-family:var(--body);font-weight:700;color:var(--text);line-height:1.2;
 .trust-i span{display:block;font-size:.83rem;color:var(--muted);margin-top:3px}
 
 /* Marquee */
-.marquee-wrap{background:var(--bg3);border-bottom:1px solid var(--line);padding:13px 0;overflow:hidden}
+/* Queda bajo el primer pantallazo y su animacion es infinita: con
+   content-visibility el navegador no la pinta mientras no se ve. */
+.marquee-wrap{background:var(--bg3);border-bottom:1px solid var(--line);padding:13px 0;overflow:hidden;content-visibility:auto;contain-intrinsic-size:auto 50px}
 .marquee-track{display:flex;width:max-content;animation:marquee 34s linear infinite}
 .marquee-item{display:inline-flex;align-items:center;gap:10px;padding:0 26px;font-size:.86rem;color:var(--muted);white-space:nowrap}
 .marquee-item b{color:var(--p-dark);font-weight:700}
